@@ -1,5 +1,7 @@
 # My Map Journal
 
+## MVP Feature Set
+
 1. Interactive Map Feature
 •	Description: Users can interact with a world map, where countries can be highlighted or marked based on whether the user has visited them.
 •	Details: Users click on a country to indicate that they’ve visited it, and they can add their personal experience (text and an optional image) for each country.
