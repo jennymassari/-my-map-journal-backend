@@ -3,6 +3,8 @@ from flask_cors import CORS
 from .db import db, migrate
 from .models.country import Country
 from .models.experience import Experience
+from .routes.country_routes import bp as country_bp
+from .routes.experience_routes import bp as experience_bp
 import os
 
 
@@ -21,6 +23,8 @@ def create_app(config=None):
     migrate.init_app(app, db)
 
     # Register Blueprints here
+    app.register_blueprint(country_bp)
+    app.register_blueprint(experience_bp)
 
     CORS(app)
     return app
