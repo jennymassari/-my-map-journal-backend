@@ -1,5 +1,8 @@
 from flask import Flask
+from flask_cors import CORS
 from .db import db, migrate
+from .models.country import Country
+from .models.experience import Experience
 import os
 
 
@@ -19,4 +22,5 @@ def create_app(config=None):
 
     # Register Blueprints here
 
+    CORS(app)
     return app

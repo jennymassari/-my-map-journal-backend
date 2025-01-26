@@ -3,14 +3,14 @@ from ..db import db
 from sqlalchemy import ForeignKey
 from typing import Optional
 
-class Expirience(db.model):
+class Experience(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     title: Mapped[str]
     description: Mapped[str]
 
 
     country_id: Mapped[Optional[int]] = mapped_column(ForeignKey("country.id")) 
-    board: Mapped[Optional["Country"]] = relationship(back_populates="expiriences")
+    board: Mapped[Optional["Country"]] = relationship(back_populates="experiences")
 
     def to_dict(self):
         return {
@@ -21,6 +21,6 @@ class Expirience(db.model):
         }
     
     @classmethod
-    def from_dict(cls, expirience_data):
-        new_expirience = cls(title=expirience_data["title"], description=expirience_data["description"], country_id=expirience_data["country_id"])
-        return new_expirience
+    def from_dict(cls, experience_data):
+        new_experience = cls(title=experience_data["title"], description=experience_data["description"], country_id=experience_data["country_id"])
+        return new_experience

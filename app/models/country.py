@@ -1,14 +1,14 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship 
 from ..db import db
-from app.models.expirence import Expirience
+from app.models.experience import Experience
 
 
-class Country(db.model):
+class Country(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     visited: Mapped[bool]
     borned: Mapped[bool]
     want_to_visit: Mapped[bool]
-    experiences: Mapped[list["Expirience"]] = relationship(back_populates="country")
+    experiences: Mapped[list["Experience"]] = relationship(back_populates="country")
 
     def to_dict(self):
         return {
