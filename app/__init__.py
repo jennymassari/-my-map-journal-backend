@@ -23,8 +23,8 @@ def create_app(config=None):
     migrate.init_app(app, db)
 
     # Register Blueprints here
-    app.register_blueprint(country_bp)
-    app.register_blueprint(experience_bp)
+    app.register_blueprint(country_bp, url_prefix='/country')
+    app.register_blueprint(experience_bp, url_prefix='/country')
 
     CORS(app)
     return app

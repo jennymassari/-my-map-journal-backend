@@ -11,40 +11,73 @@ bp = Blueprint("country_bp", __name__, url_prefix="/country")
 def gel_all_options():
     return get_models_with_filters(Country, request.args)
 
-@bp.patch("/<country_id>")
-def select_country_option(country_id):
-    country = validate_model(Country, country_id)
+@bp.get("/<country_id>")
+def get_a_country(country_id):
+    country = db.session.get(Country, country_id)
 
-    data = request.get_json()
-    borned = data.get('borned', False)
-    visited = data.get('visited', False)
-    want_to_visit = data.get('want_to_visit', False)
+    db.session.add(country)
+    db.session.commit()
+    
+    return make_response(country.to_dict(), 200)
 
-    country.visited = visited
+@bp.post("")
+def select_country_option():
+    request_body = request.get_json()
+
+    country_id = request_body.get('country_id')
+    name = request_body.get("name")
+    lat = request_body.get("lat")
+    long = request_body.get("long")
+    borned = request_body.get('borned', False)
+    visited = request_body.get('visited', False)
+    want_to_visit = request_body.get('want_to_visit', False)
+
+    country = Country.query.filter_by(id=country_id).first()
+
+    if not country:
+        country = Country(id=country_id, name=name, lat=lat, long=long)
+        db.session.add(country)
+
     country.borned = borned
+    country.visited = visited
     country.want_to_visit = want_to_visit
 
     db.session.commit()
 
     response_body = {
-        "message": "Successfully updated the country options",
-        "country": country.to_dict() 
+        "message": "Country options have been successfully selected/created.",
+        "country": country.to_dict()
     }
-    return make_response(response_body, 200)
 
+    return make_response(response_body, 201) 
 
-@bp.put("/<country_id>/unselect")
-def unselect_country_option(country_id):
+@bp.patch("/<country_id>")
+def update_country_option(country_id):
     country = validate_model(Country, country_id)
 
-    country.visited = False
-    country.borned = False
-    country.want_to_visit = False
+
+    request_body = request.get_json()
+
+
+    if request_body.get("unselect_all", False):
+        country.borned = False
+        country.visited = False
+        country.want_to_visit = False
+    else:
+
+        if "borned" in request_body:
+            country.borned = request_body["borned"]
+        if "visited" in request_body:
+            country.visited = request_body["visited"]
+        if "want_to_visit" in request_body:
+            country.want_to_visit = request_body["want_to_visit"]
 
     db.session.commit()
 
     response_body = {
-        "message": f"The option for country {country_id} has been unselected.",
-        "country": country.to_dict()  
+        "message": "Successfully updated the country options",
+        "country": country.to_dict()
     }
+
     return make_response(response_body, 200)
+
