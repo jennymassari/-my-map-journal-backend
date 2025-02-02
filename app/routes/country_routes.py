@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, make_response, request, Response
+from flask import Blueprint, abort, make_response, request, Response, jsonify
 from app.models.country import Country
 from app.models.experience import Experience
 from app.db import db
@@ -9,7 +9,8 @@ bp = Blueprint("country_bp", __name__, url_prefix="/country")
 
 @bp.get("")
 def gel_all_options():
-    return get_models_with_filters(Country, request.args)
+    countries =  get_models_with_filters(Country, request.args)
+    return jsonify(countries, 200)
 
 @bp.get("/<country_id>")
 def get_a_country(country_id):
