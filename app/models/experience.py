@@ -23,7 +23,7 @@ class Experience(db.Model):
     description = Column(String, nullable=False)
     image = Column(String(255), nullable=True)
 
-    country_id = Column(Integer, ForeignKey("country.id"), nullable=True)
+    country_id = Column(Integer, ForeignKey("countries.id"), nullable=True)
     country = relationship("Country", back_populates="experiences")
 
 

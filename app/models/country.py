@@ -24,6 +24,7 @@ class Country(db.Model):
     visited = Column(Boolean, nullable=False)
     borned = Column(Boolean, nullable=False)
     want_to_visit = Column(Boolean, nullable=False)
+
     experiences = relationship("Experience", back_populates="country")
 
 
