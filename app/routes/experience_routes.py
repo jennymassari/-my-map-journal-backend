@@ -28,7 +28,7 @@ def get_all_experiences():
     return response_body
 
 
-@bp.get("/<experience_id>")
+@bp.get("/experience/<experience_id>")
 def get_a_experience(experience_id):
     experience = db.session.get(Experience, experience_id)
     
