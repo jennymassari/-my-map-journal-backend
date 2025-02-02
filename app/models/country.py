@@ -15,7 +15,7 @@ class Country(db.Model):
     # want_to_visit: Mapped[bool]
     # experiences: Mapped[list["Experience"]] = relationship("Experience", back_populates="country")
 
-    __tablename__ = 'countries'
+    __tablename__ = 'country'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
