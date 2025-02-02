@@ -91,7 +91,7 @@ def create_experience_to_a_country(country_id):
     response_body = new_experience.to_dict()
     return make_response(response_body, 201)
 
-@bp.patch("/<experience_id>")
+@bp.patch("/experience/<experience_id>")
 def update_experience(experience_id):
     experience = Experience.query.get(experience_id)
 
@@ -100,24 +100,16 @@ def update_experience(experience_id):
 
     request_body = request.get_json()
 
-    borned = request_body.get("borned", None)
-    visited = request_body.get("visited", None)
-    want_to_visit = request_body.get("want_to_visit", None)
+    title = request_body.get("title", None)
+    description = request_body.get("description", None)
+    image = request_body.get("image", None)
 
-    if borned:
-        experience.borned = True
-        experience.visited = False  
-        experience.want_to_visit = False  
-    elif visited:
-        experience.visited = True
-        experience.borned = False  
-        experience.want_to_visit = False  
-    elif want_to_visit:
-        experience.want_to_visit = True
-        experience.borned = False  
-        experience.visited = False  
-    else:
-        return make_response({"message": "No valid option selected."}, 400)
+    if title is not None:
+        experience.title = title
+    if description is not None:
+        experience.description = description
+    if image is not None:
+        experience.image = image
 
     db.session.commit()
 
@@ -128,7 +120,7 @@ def update_experience(experience_id):
 
     return make_response(response_body, 200)
 
-@bp.delete("/<experience_id>")
+@bp.delete("/experience/<experience_id>")
 def delete_a_experience(experience_id):
     experience = validate_model(Experience, experience_id)
     
