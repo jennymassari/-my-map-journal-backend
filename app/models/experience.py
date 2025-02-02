@@ -24,7 +24,7 @@ class Experience(db.Model):
     image = Column(String(255), nullable=True)
 
     country_id = Column(Integer, ForeignKey("country.id"), nullable=True)
-    country = relationship("Country", back_populates="experiences")
+    country = relationship("Country", back_populates="experience")
 
 
     def to_dict(self):
