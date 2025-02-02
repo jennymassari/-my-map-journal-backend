@@ -16,7 +16,7 @@ class Experience(db.Model):
     # country_id: Mapped[Optional[int]] = mapped_column(ForeignKey("country.id")) 
     # country: Mapped[Optional["Country"]] = relationship(back_populates="experiences")
 
-    __tablename__ = 'experiences'
+    __tablename__ = 'experience'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String, nullable=False)
@@ -24,7 +24,7 @@ class Experience(db.Model):
     image = Column(String(255), nullable=True)
 
     country_id = Column(Integer, ForeignKey("country.id"), nullable=True)
-    country = relationship("Country", back_populates="experience")
+    country = relationship("Country", back_populates="experiences")
 
 
     def to_dict(self):
