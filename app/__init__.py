@@ -12,8 +12,8 @@ def create_app(config=None):
     app = Flask(__name__)
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
-    #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u5ia8cek9u754:pb491895a478c0281e6556f9b5827c43ad31534a65328b9a07009c29b99bbfc0c@cf980tnnkgv1bp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/desdk7dn9j6tno'
+    #app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u5ia8cek9u754:pb491895a478c0281e6556f9b5827c43ad31534a65328b9a07009c29b99bbfc0c@cf980tnnkgv1bp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/desdk7dn9j6tno'
 
     if config:
         # Merge `config` into the app's configuration
