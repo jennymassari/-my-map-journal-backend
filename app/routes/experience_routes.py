@@ -40,7 +40,7 @@ def get_a_experience(experience_id):
     return make_response(experience.to_dict(), 200)
 
 # @bp.get("/<country_id>/experience")
-@bp.get("/country/<int:country_id>")
+@bp.get("/country/<country_id>/experience")
 def get_experiences_for_country(country_id):
     country = validate_model(Country, country_id)
 
