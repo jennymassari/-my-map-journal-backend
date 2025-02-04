@@ -25,7 +25,7 @@ def create_app(config=None):
 
     # Register Blueprints here
     app.register_blueprint(country_bp, url_prefix='/country')
-    app.register_blueprint(experience_bp, url_prefix='/country')
+    app.register_blueprint(experience_bp, url_prefix='/experiences')
 
     CORS(app)
     return app

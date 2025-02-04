@@ -11,7 +11,7 @@ UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Max file size (16MB)
 
-bp = Blueprint("experience_bp", __name__, url_prefix="/country")
+bp = Blueprint("experience_bp", __name__, url_prefix='/experiences')
 
 # Helper function to check if the file type is allowed
 def allowed_file(filename):
@@ -129,5 +129,8 @@ def delete_a_experience(experience_id):
 
     response_body = {"details": f'Experience {experience_id} "{experience.title}" successfully deleted.'}
     return make_response(response_body, 200)
+
+    #when an experience is deleted by ID. The other ID's don't update in ascending order, for example if I delete the id 1 I am not going to have an ID 1 in next post request. I'll keep folloing the order of id's
+
 
 

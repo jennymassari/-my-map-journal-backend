@@ -56,9 +56,7 @@ def select_country_option():
 def update_country_option(country_id):
     country = validate_model(Country, country_id)
 
-
     request_body = request.get_json()
-
 
     if request_body.get("unselect_all", False):
         country.borned = False
