@@ -11,7 +11,7 @@ UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Max file size (16MB)
 
-bp = Blueprint("experience_bp", __name__, url_prefix='/experiences')
+bp = Blueprint("experience_bp", __name__, url_prefix='/experience')
 
 # Helper function to check if the file type is allowed
 def allowed_file(filename):
