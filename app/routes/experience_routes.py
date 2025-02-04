@@ -6,18 +6,11 @@ from app.db import db
 import os
 from werkzeug.utils import secure_filename
 
-# Define the upload folder and allowed file extensions
-UPLOAD_FOLDER = 'uploads/'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # Max file size (16MB)
 
-bp = Blueprint("experience_bp", __name__, url_prefix='/experience')
+bp = Blueprint("experiences_bp", __name__, url_prefix='/experiences')
 
-# Helper function to check if the file type is allowed
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.get("")
+@bp.get("/experiences")
 def get_all_experiences():
     query = db.select(Experience)
     
@@ -39,61 +32,9 @@ def get_a_experience(experience_id):
 
     return make_response(experience.to_dict(), 200)
 
-# @bp.get("/<country_id>/experience")
-@bp.get("/country/<country_id>/experience")
-def get_experiences_for_country(country_id):
-    country = validate_model(Country, country_id)
 
-    experiences = db.session.query(Experience).filter_by(country_id=country.id).order_by(Experience.id).all()
 
-    response_body = {
-        "country": {
-            "id": country.id,
-            "name": country.name
-        },
-        "experiences": [experience.to_dict() for experience in experiences]
-    }
 
-    return make_response(response_body, 200) 
-
-# @bp.post("/<country_id>/experience")
-@bp.post("/country/<int:country_id>")
-def create_experience_to_a_country(country_id):
-    request_body = request.get_json()
-
-    title = request_body.get("title")
-    description = request_body.get("description")
-    country_id = request_body.get("country_id")
-
-    country = validate_model(Country, country_id)
-
-    # Check if an image file was included in the request
-    image = request.files.get('image')
-
-    # If an image is provided, save it
-    if image and allowed_file(image.filename):
-        # Ensure the file is safe to save (e.g., no path traversal attacks)
-        filename = secure_filename(image.filename)
-        
-        image.save(os.path.join(UPLOAD_FOLDER, filename))
-
-        image_path = os.path.join(UPLOAD_FOLDER, filename)  
-
-    else:
-        image_path = None  
-
-    new_experience = Experience(
-        title=title,
-        description=description,
-        country_id=country_id,
-        image=image_path 
-    )
-
-    db.session.add(new_experience)
-    db.session.commit()
-
-    response_body = new_experience.to_dict()
-    return make_response(response_body, 201)
 
 # @bp.patch("/experience/<experience_id>")
 @bp.patch("/<experience_id>")

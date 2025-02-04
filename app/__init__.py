@@ -4,7 +4,7 @@ from .db import db, migrate
 from .models.country import Country
 from .models.experience import Experience
 from .routes.country_routes import bp as country_bp
-from .routes.experience_routes import bp as experience_bp
+from .routes.experience_routes import bp as experiences_bp
 import os
 
 
@@ -25,7 +25,7 @@ def create_app(config=None):
 
     # Register Blueprints here
     app.register_blueprint(country_bp, url_prefix='/country')
-    app.register_blueprint(experience_bp, url_prefix='/experiences')
+    app.register_blueprint(experiences_bp, url_prefix='/experiences')
 
     CORS(app)
     return app
