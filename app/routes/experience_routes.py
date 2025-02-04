@@ -26,9 +26,11 @@ def get_all_experiences():
     
     response_body = [experience.to_dict() for experience in experiences]
     return response_body
+   
 
 
-@bp.get("/experience/<experience_id>")
+# @bp.get("/experience/<experience_id>")
+@bp.get("/<experience_id>")
 def get_a_experience(experience_id):
     experience = db.session.get(Experience, experience_id)
     
@@ -37,7 +39,8 @@ def get_a_experience(experience_id):
 
     return make_response(experience.to_dict(), 200)
 
-@bp.get("/<country_id>/experience")
+# @bp.get("/<country_id>/experience")
+@bp.get("/country/<int:country_id>")
 def get_experiences_for_country(country_id):
     country = validate_model(Country, country_id)
 
@@ -53,7 +56,8 @@ def get_experiences_for_country(country_id):
 
     return make_response(response_body, 200) 
 
-@bp.post("/<country_id>/experience")
+# @bp.post("/<country_id>/experience")
+@bp.post("/country/<int:country_id>")
 def create_experience_to_a_country(country_id):
     request_body = request.get_json()
 
@@ -91,7 +95,8 @@ def create_experience_to_a_country(country_id):
     response_body = new_experience.to_dict()
     return make_response(response_body, 201)
 
-@bp.patch("/experience/<experience_id>")
+# @bp.patch("/experience/<experience_id>")
+@bp.patch("/<experience_id>")
 def update_experience(experience_id):
     experience = Experience.query.get(experience_id)
 
@@ -120,7 +125,9 @@ def update_experience(experience_id):
 
     return make_response(response_body, 200)
 
-@bp.delete("/experience/<experience_id>")
+# @bp.delete("/experience/<experience_id>")
+
+@bp.delete("/<experience_id>")
 def delete_a_experience(experience_id):
     experience = validate_model(Experience, experience_id)
     
